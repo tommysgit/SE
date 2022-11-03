@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@Entity
 public class Board extends BaseEntity{
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)

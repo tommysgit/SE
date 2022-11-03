@@ -3,7 +3,7 @@ package SoftwareEngineering.server.Domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
 public class Field {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)

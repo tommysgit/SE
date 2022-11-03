@@ -2,7 +2,7 @@ package SoftwareEngineering.server.Domain;
 
 import javax.persistence.*;
 import java.sql.Date;
-
+@Entity
 public class Reservation extends BaseEntity{
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
