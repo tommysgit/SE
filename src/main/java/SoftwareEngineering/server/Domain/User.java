@@ -1,24 +1,35 @@
 package SoftwareEngineering.server.Domain;
 
+import SoftwareEngineering.server.Common.ErrorCode;
+import SoftwareEngineering.server.Common.Exception.InvalidRequestException;
+import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
-
+// AllArgsConstructor는 빌더패턴에 필수로 필요하고, 한번 생성한 객체를 불변으로 하기위해 private
+// @Entity는 기본적으로 생성자를 만들어주지만 접근제어를 위해 @NoArgsConstructor(access = AccessLevel.PROTECTED) 설정, Lazy Loading에서 Entity 프록시가 접근을 못한다.
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
+@Builder
+@Getter
 public class User {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long userIdx;
     @NotBlank
     @Size(min = 2, max = 4)
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false)
     private String name;
     @NotBlank
-    @Column(name = "email", nullable = false)
+    @Column(nullable = false)
     private String email;
     @NotBlank
-    @Column(name = "password", nullable = false)
+    @Column(nullable = false)
     private String password;
     @NotBlank
     @Column(name = "is_delete", nullable = false)
@@ -35,5 +46,11 @@ public class User {
     private List<Board> boards = new ArrayList<>();
     public void addReservation(Reservation reservation){
         reservations.add(reservation);
+    }
+
+    public void checkPassword(PasswordEncoder passwordEncoder, String encodedPassword){
+        if(passwordEncoder.matches(encodedPassword, this.password)){
+            throw new InvalidRequestException(ErrorCode.PASSWORD_NOT_EQUAL);
+        }
     }
 }
