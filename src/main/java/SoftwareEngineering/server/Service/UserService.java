@@ -22,6 +22,7 @@ public class UserService {
         User savedUser = userRepository.save(user);
         return savedUser;
     }
+    // readonly는 flush가 발생하지 않아 엔티티의 등록 수정 삭제가 일어나지 않고, 변경감지를 위한 스냅샷을 보관하지 않아 성능 향상
     @Transactional(readOnly = true)
     // 로그인
     public User login(UserDto.UserLoginReqDto userLoginReqDto){

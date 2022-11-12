@@ -1,0 +1,28 @@
+spring:
+  # 스프링 부트의 버전 업데이트로 ant_path_matcher로 설정해야 swagger 가능
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    url: jdbc:mysql://yeolut.cqwfsqls3ibm.ap-northeast-2.rds.amazonaws.com:3306/SE
+    username: admin
+    password: yeolutbundle
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+
+
+springdoc:
+  version: '@springdoc.version@'
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true
+  show-actuator: true

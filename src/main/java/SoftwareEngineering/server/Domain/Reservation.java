@@ -1,7 +1,14 @@
 package SoftwareEngineering.server.Domain;
 
+import lombok.*;
+
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
+
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@Getter
 @Entity
 public class Reservation extends BaseEntity{
     @Id

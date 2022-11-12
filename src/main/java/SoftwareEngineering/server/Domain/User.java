@@ -39,10 +39,9 @@ public class User {
     @JoinColumn(name = "majorIdx")
     private Major major;
     @OneToMany(mappedBy = "user")
-
     private List<Reservation> reservations = new ArrayList<>();
-    @OneToMany(mappedBy = "user")
 
+    @OneToMany(mappedBy = "user")
     private List<Board> boards = new ArrayList<>();
     public void addReservation(Reservation reservation){
         reservations.add(reservation);
