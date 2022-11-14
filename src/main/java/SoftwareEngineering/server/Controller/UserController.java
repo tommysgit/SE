@@ -6,10 +6,7 @@ import SoftwareEngineering.server.Dto.UserDto;
 import SoftwareEngineering.server.Service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -28,6 +25,20 @@ public class UserController {
     public BaseResponse<User> UserLoginReq(@RequestBody UserDto.UserLoginReqDto userLoginReqDto){
         User loginUser = userService.login(userLoginReqDto);
         return BaseResponse.<User>builder().message("로그인에 성공하였습니다.").code(200).data(loginUser).build();
+    }
+
+    @Operation(description = "이메일 중복확인")
+    @PostMapping("/check/email/{email}")
+    public BaseResponse checkEmail(@PathVariable String email){
+        boolean result = userService.findUserByEmail(email);
+        BaseResponse baseResponse;
+        if(result == true){
+            baseResponse = BaseResponse.builder().message("이메일이 존재합니다.").code(250).build();
+        }
+        else{
+            baseResponse = BaseResponse.builder().message("이메일이 존재하지 않습니다.").code(251).build();
+        }
+        return baseResponse;
     }
 
 }

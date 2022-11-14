@@ -13,6 +13,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    @Transactional(readOnly = true)
+    public boolean findUserByEmail(String email){
+        User user = userRepository.findByEmailAndIsDelete(email, 'N');
+        if(user != null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     @Transactional(readOnly = true)
     // 회원가입
     public User setUser(UserDto.UserSetReqDto userSetReqDto){
