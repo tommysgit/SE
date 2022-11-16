@@ -1,9 +1,13 @@
 package SoftwareEngineering.server.Service;
 
+import SoftwareEngineering.server.Common.ErrorCode;
+import SoftwareEngineering.server.Common.Exception.ExistsException;
+import SoftwareEngineering.server.Common.Exception.NotExistsException;
 import SoftwareEngineering.server.Domain.User;
 import SoftwareEngineering.server.Dto.UserDto;
 import SoftwareEngineering.server.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,14 +19,14 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
-    public boolean findUserByEmail(String email){
-        User user = userRepository.findByEmailAndIsDelete(email, 'N');
+    public void findUserByEmail(String email){
+        User user = userRepository.findByEmailAndIsDelete(email, 'N')
+                .get();
+
         if(user != null){
-            return true;
+            throw new ExistsException(ErrorCode.EMAIL_EXISTS);
         }
-        else{
-            return false;
-        }
+
     }
 
     @Transactional(readOnly = true)
@@ -38,7 +42,8 @@ public class UserService {
     @Transactional(readOnly = true)
     // 로그인
     public User login(UserDto.UserLoginReqDto userLoginReqDto){
-        User loginUser = userRepository.findByEmailAndIsDelete(userLoginReqDto.getEmail(), 'N');
+        User loginUser = userRepository.findByEmailAndIsDelete(userLoginReqDto.getEmail(), 'N')
+                        .get();
         loginUser.checkPassword(passwordEncoder, passwordEncoder.encode(loginUser.getPassword()));
         return loginUser;
     }

@@ -30,15 +30,9 @@ public class UserController {
     @Operation(description = "이메일 중복확인")
     @PostMapping("/check/email/{email}")
     public BaseResponse checkEmail(@PathVariable String email){
-        boolean result = userService.findUserByEmail(email);
-        BaseResponse baseResponse;
-        if(result == true){
-            baseResponse = BaseResponse.builder().message("이메일이 존재합니다.").code(250).build();
-        }
-        else{
-            baseResponse = BaseResponse.builder().message("이메일이 존재하지 않습니다.").code(251).build();
-        }
-        return baseResponse;
+        userService.findUserByEmail(email);
+
+        return BaseResponse.builder().message("사용 가능한 이메일입니다.").code(251).build();
     }
 
 }

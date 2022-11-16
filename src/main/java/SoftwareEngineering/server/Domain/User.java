@@ -2,6 +2,7 @@ package SoftwareEngineering.server.Domain;
 
 import SoftwareEngineering.server.Common.ErrorCode;
 import SoftwareEngineering.server.Common.Exception.InvalidRequestException;
+import SoftwareEngineering.server.Domain.enums.Role;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -22,6 +23,9 @@ public class User {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long userIdx;
     @NotBlank
+    @Column(nullable = false)
+    private int studentId;
+    @NotBlank
     @Size(min = 2, max = 4)
     @Column(nullable = false)
     private String name;
@@ -34,6 +38,9 @@ public class User {
     @NotBlank
     @Column(name = "is_delete", nullable = false)
     private char isDelete;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @ManyToOne
     @JoinColumn(name = "majorIdx")
