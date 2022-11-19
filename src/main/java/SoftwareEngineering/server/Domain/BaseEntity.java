@@ -8,13 +8,16 @@ import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 public class BaseEntity {
     @CreatedDate
-    @Column
-    private Date createdAt;
+    @Column(name = "created_at")
+    private Timestamp createdAt;
     @LastModifiedBy
-    private Date updatedAt;
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
 }

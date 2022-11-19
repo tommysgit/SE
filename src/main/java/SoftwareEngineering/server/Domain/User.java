@@ -20,6 +20,7 @@ import java.util.List;
 @Getter
 public class User {
     @Id
+    @Column(name = "user_id")
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long userIdx;
     @NotBlank
@@ -43,13 +44,19 @@ public class User {
     private Role role;
 
     @ManyToOne
-    @JoinColumn(name = "majorIdx")
+    @JoinColumn(name = "major_id")
     private Major major;
     @OneToMany(mappedBy = "user")
     private List<Reservation> reservations = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Board> boards = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Team> teams = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Team_User> team_users = new ArrayList<>();
     public void addReservation(Reservation reservation){
         reservations.add(reservation);
     }
@@ -58,5 +65,8 @@ public class User {
         if(passwordEncoder.matches(encodedPassword, this.password)){
             throw new InvalidRequestException(ErrorCode.PASSWORD_NOT_EQUAL);
         }
+    }
+    public String getRole(){
+        return this.role.getDescription();
     }
 }

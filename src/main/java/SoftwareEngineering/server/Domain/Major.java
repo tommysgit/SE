@@ -6,8 +6,9 @@ import java.util.List;
 @Entity
 public class Major {
     @Id
+    @Column(name = "major_id")
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private String majorIdx;
+    private Long majorIdx;
 
     @Column
     private String name;

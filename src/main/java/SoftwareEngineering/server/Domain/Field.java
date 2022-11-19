@@ -5,10 +5,11 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
 @Getter
 public class Field {
     @Id
+    @Column(name = "field_id")
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long fieldIdx;
 
