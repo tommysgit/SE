@@ -36,7 +36,6 @@ public class User {
     @NotBlank
     @Column(nullable = false)
     private String password;
-    @NotBlank
     @Column(name = "is_delete", nullable = false)
     private char isDelete;
 
