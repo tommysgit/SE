@@ -12,6 +12,7 @@ import java.util.Date;
 @Entity
 public class Reservation extends BaseEntity{
     @Id
+    @Column(name = "reservation_id")
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long reservationIdx;
 
@@ -28,10 +29,10 @@ public class Reservation extends BaseEntity{
     private Date endTime;
 
     @ManyToOne
-    @JoinColumn(name ="userIdx")
+    @JoinColumn(name ="user_id")
     private User user;
     @ManyToOne
-    @JoinColumn(name = "fieldIdx")
+    @JoinColumn(name = "field_id")
     private Field field;
 
 

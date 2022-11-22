@@ -2,20 +2,32 @@ package SoftwareEngineering.server.Dto;
 
 import SoftwareEngineering.server.Domain.Field;
 import SoftwareEngineering.server.Domain.User;
+import lombok.Builder;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 public class ReservationDto {
 
     @Getter
     public static class ReservationSetReqDto{
-        private Long userIdx;
 
         private Long fieldIdx;
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+        private LocalDateTime start_time;
 
-        private Date start_time;
-
-        private Date end_time;
     }
+
+    @Getter
+    @Builder
+    public static class ReservationGetResDto{
+        private Long fieldIdx;
+        private String name;
+        private List<Date> dateList;
+    }
+
+
 }
