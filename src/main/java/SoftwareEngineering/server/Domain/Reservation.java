@@ -3,7 +3,9 @@ package SoftwareEngineering.server.Domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,5 +37,6 @@ public class Reservation extends BaseEntity{
     @JoinColumn(name = "field_id")
     private Field field;
 
-
+    @OneToMany(mappedBy = "reservation")
+    private List<Board> boards = new ArrayList<>();
 }

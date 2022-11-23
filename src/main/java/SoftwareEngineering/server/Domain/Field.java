@@ -22,14 +22,10 @@ public class Field {
     @Column
     private String sort;
 
-    @OneToMany(mappedBy = "field")
-    private List<Board> boards = new ArrayList<>();
+
     @OneToMany(mappedBy = "field")
     private List<Reservation> reservations = new ArrayList<>();
 
-    public void addBoard(Board board){
-        boards.add(board);
-    }
     public void addReservation(Reservation reservation){
         reservations.add((reservation));
     }

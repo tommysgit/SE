@@ -3,6 +3,8 @@ package SoftwareEngineering.server.Domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 
@@ -19,11 +21,14 @@ public class Board extends BaseEntity{
     @Column(name = "is_delete", nullable = false)
     private char isDelete;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @NotBlank
+    @Column
+    private int limit;
 
     @ManyToOne
-    @JoinColumn(name = "field_id", nullable = false)
-    private Field field;
+    @JoinColumn(name = "reservation_id", nullable = false)
+    private Reservation reservation;
+
+    @OneToMany(mappedBy = "board")
+    private List<Mercenary> mercenaries = new ArrayList<>();
 }

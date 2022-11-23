@@ -18,7 +18,7 @@ import java.util.List;
 @Entity
 @Builder
 @Getter
-public class User {
+public class User extends BaseEntity{
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
@@ -38,6 +38,9 @@ public class User {
     private String password;
     @Column(name = "is_delete", nullable = false)
     private char isDelete;
+    @NotBlank
+    @Column(nullable = false)
+    private int phoneNum;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -48,14 +51,18 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Reservation> reservations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Board> boards = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "user")
     private List<Team> teams = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Team_User> team_users = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Mercenary> mercenaries = new ArrayList<>();
+
+
     public void addReservation(Reservation reservation){
         reservations.add(reservation);
     }

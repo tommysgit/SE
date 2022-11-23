@@ -1,5 +1,6 @@
 package SoftwareEngineering.server.Domain;
 
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -13,6 +14,7 @@ import java.sql.Timestamp;
 
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
+@Getter
 public class BaseEntity {
     @CreatedDate
     @Column(name = "created_at")
