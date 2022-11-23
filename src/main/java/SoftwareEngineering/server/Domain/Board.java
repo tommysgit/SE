@@ -1,13 +1,17 @@
 package SoftwareEngineering.server.Domain;
 
+import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
-
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-
+@Builder
+@Getter
 public class Board extends BaseEntity{
     @Id
     @Column(name = "board_id")
