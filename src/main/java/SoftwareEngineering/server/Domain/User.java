@@ -40,7 +40,7 @@ public class User extends BaseEntity{
     private char isDelete;
     @NotBlank
     @Column(nullable = false)
-    private int phoneNum;
+    private String phoneNum;
 
     @Enumerated(EnumType.STRING)
     private Role role;

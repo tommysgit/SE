@@ -16,7 +16,6 @@ public class ReservationDto {
     public static class ReservationSetReqDto{
 
         private Long fieldIdx;
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
         private LocalDateTime start_time;
 
     }
@@ -26,7 +25,7 @@ public class ReservationDto {
     public static class ReservationGetResDto{
         private Long fieldIdx;
         private String name;
-        private List<Date> dateList;
+        private List<LocalDateTime> dateList;
     }
 
 

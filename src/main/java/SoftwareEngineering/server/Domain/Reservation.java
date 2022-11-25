@@ -3,6 +3,7 @@ package SoftwareEngineering.server.Domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,10 +26,10 @@ public class Reservation extends BaseEntity{
     private char isApproval;
 
     @Column(name = "start_time", nullable = false)
-    private Date startTime;
+    private LocalDateTime startTime;
 
-    @Column(name = "end_time", nullable = false)
-    private Date endTime;
+    @Column(name = "end_time")
+    private LocalDateTime endTime;
 
     @ManyToOne
     @JoinColumn(name ="user_id")

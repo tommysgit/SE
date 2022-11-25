@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 // 이너 클래스를 이용하여 코드를 간결하게하고 같은 도메인의 Dto를 캡슐화를 한다. 내부 클래스에서 외부 클래스로의 접근을 막기위해 정적 클래스로 생성
@@ -24,6 +25,7 @@ public class UserDto {
 
         private Long majorIdx;
 
+        private String phoneNum;
     }
     @Getter
     public static class UserLoginReqDto{
@@ -45,9 +47,9 @@ public class UserDto {
     @Builder
     public static class UserReservationListResDto{
         private Long reservationIdx;
-        private Date startTime;
-        private Date endTime;
-        private Timestamp createdAt;
+        private LocalDateTime startTime;
+        private LocalDateTime endTime;
+        private LocalDateTime createdAt;
         private Long fieldIdx;
         private String name;
     }

@@ -1,18 +1,20 @@
 package SoftwareEngineering.server.Domain;
 
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
-
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
+@Builder
 public class Mercenary extends BaseEntity{
     @Id
     @Column(name = "mercenary_id")
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long mercenaryIdx;
 
-    @Column(name = "id_approval")
+    @Column(name = "is_approval")
     private char isApproval;
 
     @ManyToOne

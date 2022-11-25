@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class BoardDto {
@@ -14,14 +15,14 @@ public class BoardDto {
         private Long boardIdx;
         private String title;
         private String content;
-        private Timestamp createdAt;
-        private Integer limit;
+        private LocalDateTime createdAt;
+        private int limit;
         private Long filedIdx;
         private String name;
         private Long reservationIdx;
-        private Date startTime;
-        private Date endTime;
-        private Integer currentPeople;
+        private LocalDateTime startTime;
+        private LocalDateTime endTime;
+        private int currentPeople;
     }
 
     @Getter
