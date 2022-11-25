@@ -1,9 +1,12 @@
 package SoftwareEngineering.server.Domain;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
+@Getter
 public class Major {
     @Id
     @Column(name = "major_id")
