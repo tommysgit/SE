@@ -22,8 +22,8 @@ import java.util.List;
 public class MajorController {
     private final MajorService majorService;
     @Operation(summary = "학과 목록 조회")
-    @GetMapping("/list")
-    @ApiResponse(responseCode = "200", description = "로그인 성공", content = @Content(schema = @Schema(implementation = ApiCallResponse.ApiCallResponseMajorList.class)))
+    @GetMapping
+    //@ApiResponse(responseCode = "200", description = "로그인 성공", content = @Content(schema = @Schema(implementation = ApiCallResponse.ApiCallResponseMajorList.class)))
     public BaseResponse<List<MajorDto.MajorListResDto>> getMajorList(){
         List<MajorDto.MajorListResDto> majorList = majorService.getMajorList();
         return BaseResponse.<List<MajorDto.MajorListResDto>>builder().message("성공").code(200).data(majorList).build();

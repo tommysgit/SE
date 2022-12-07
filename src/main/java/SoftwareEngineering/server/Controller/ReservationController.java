@@ -12,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -27,15 +28,15 @@ public class ReservationController {
     private final ReservationService reservationService;
 
     @PreAuthorize("hasRole('ROLE_MEMBER')")
-    @Operation(description = "예약신청")
+    @Operation(description = "구장 예약 신청", summary = "구장 예약 신청")
     @PostMapping()
-    public BaseResponse<Reservation> ReservationSet(@RequestBody ReservationDto.ReservationSetReqDto reservationSetReqDto, @AuthenticationPrincipal User userInfo){
-        Reservation savedReservation = reservationService.setReservation(reservationSetReqDto, userInfo);
-        return BaseResponse.<Reservation>builder().message("예약신청완료").data(savedReservation).code(200).build();
+    public BaseResponse ReservationSet(@Valid @RequestBody ReservationDto.ReservationSetReqDto reservationSetReqDto, @AuthenticationPrincipal User userInfo){
+        reservationService.setReservation(reservationSetReqDto, userInfo);
+        return BaseResponse.builder().message("예약신청완료").code(200).build();
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER')")
-    @Operation(description = "예약조회")
+    @Operation(description = "예약목록 조회", summary = "예약목록 조회")
     @GetMapping()
     public BaseResponse<ReservationDto.ReservationGetResDto> ReservationGet( @RequestParam("localDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate localDate, @RequestParam Long fieldIdx){
 

@@ -24,6 +24,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Tag(name = "User", description = "유저 API")
@@ -35,25 +36,20 @@ public class UserController {
     private final UserService userService;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
-    @Operation(description = "회원가입")
+    @Operation(description = "회원가입", summary = "회원가입")
     @PostMapping("/signUp")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "로그인 성공", content = @Content(schema = @Schema(implementation = ApiCallResponse.ApiCallResponseSingUp.class)))
-            }
-    )
-    public BaseResponse<User> UserSetReq(@RequestBody UserDto.UserSetReqDto userSetReqDto){
+    public BaseResponse UserSetReq(@Valid @RequestBody UserDto.UserSetReqDto userSetReqDto){
         if(userRepository.findByEmailAndIsDelete(userSetReqDto.getEmail(), 'N').isPresent()){
             throw new ExistsException(ErrorCode.EMAIL_EXISTS);
         }
-        User savedUser = userService.setUser(userSetReqDto);
-        return BaseResponse.<User>builder().message("회원가입이 완료되었습니다.").code(200).data(savedUser).build();
+        userService.setUser(userSetReqDto);
+        return BaseResponse.builder().message("회원가입이 완료되었습니다.").code(200).build();
     }
 
-    @Operation(description = "로그인")
+    @Operation(description = "로그인", summary = "로그인")
     @PostMapping("/login")
-    @ApiResponse(responseCode = "200", description = "로그인 성공", content = @Content(schema = @Schema(implementation = ApiCallResponse.ApiCallResponseLogin.class)))
-    public BaseResponse<UserDto.UserLoginResDto> UserLoginReq(@RequestBody UserDto.UserLoginReqDto userLoginReqDto){
+    //@ApiResponse(responseCode = "200", description = "로그인 성공", content = @Content(schema = @Schema(implementation = ApiCallResponse.ApiCallResponseLogin.class)))
+    public BaseResponse<UserDto.UserLoginResDto> UserLoginReq(@Valid @RequestBody UserDto.UserLoginReqDto userLoginReqDto){
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userLoginReqDto.getEmail(),
                 userLoginReqDto.getPassword());
 
@@ -67,21 +63,21 @@ public class UserController {
                 .name(loginUser.getName()).email(loginUser.getEmail()).studentId(loginUser.getStudentId()).token(jwtToken).build()).build();
     }
 
-    @Operation(description = "이메일 중복확인")
+    @Operation(description = "이메일 중복확인", summary = "이메일 중복확인")
     @PostMapping("/check/email/{email}")
     public BaseResponse checkEmail(@PathVariable String email){
         userService.findUserByEmail(email);
         return BaseResponse.builder().message("사용 가능한 이메일입니다.").code(251).build();
     }
     @PreAuthorize("hasRole('ROLE_MEMBER')")
-    @Operation(description = "유저 예약내역 조회")
+    @Operation(description = "유저 예약내역 조회", summary = "유저 예약내역 조회")
     @GetMapping("/reservation")
     public BaseResponse<List<UserDto.UserReservationListResDto>> UserReservationListReq(@AuthenticationPrincipal org.springframework.security.core.userdetails.User userInfo){
         return BaseResponse.<List<UserDto.UserReservationListResDto>>builder().code(200).message("성공").data(userService.findUserReservation(userInfo)).build();
     }
 
     @PreAuthorize("hasRole('ROLE_MEMBER')")
-    @Operation(description = "유저 예약내역 삭제")
+    @Operation(description = "유저 예약내역 삭제", summary = "유저 예약내역 삭제")
     @DeleteMapping("/reservation/{id}")
     public BaseResponse deleteUserReservationReq(@AuthenticationPrincipal org.springframework.security.core.userdetails.User userInfo, @PathVariable Long id ){
         userService.deleteUserReservation(id);
