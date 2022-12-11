@@ -30,17 +30,16 @@ public class ReservationService {
 
     @Transactional
     // 구장 예약 -> 해당 시간에 예약이 존재할 시 예외처리
-    public Reservation setReservation(ReservationDto.ReservationSetReqDto reservationSetReqDto, User userInfo) {
+    public void setReservation(ReservationDto.ReservationSetReqDto reservationSetReqDto, User userInfo) {
         SoftwareEngineering.server.Domain.User user = userRepository.findByEmailAndIsDelete(userInfo.getUsername(), 'N').get();
+
+
         Field field = fieldRepository.findById(reservationSetReqDto.getFieldIdx()).get();
 
-        Date start = Date.from(reservationSetReqDto.getStart_time().atZone(ZoneId.systemDefault()).toInstant());
-        reservationSetReqDto.getStart_time().plusHours(1);
-        Date end = Date.from(reservationSetReqDto.getStart_time().atZone(ZoneId.systemDefault()).toInstant());
 
-        Reservation reservation = reservationRepository.save(Reservation.builder().user(user).field(field).startTime(start).endTime(end).build());
+        reservationRepository.save(Reservation.builder().user(user).field(field).startTime(reservationSetReqDto.getStart_time()).build());
 
-        return reservation;
+
     }
     @Transactional(readOnly = true)
     // 예약 조회
@@ -49,17 +48,16 @@ public class ReservationService {
         LocalDateTime startDateTime = LocalDateTime.of(localDate, LocalTime.of(10, 0));
         LocalDateTime endDateTime = LocalDateTime.of(localDate, LocalTime.of(20, 59));
 
-        Date start = Date.from(startDateTime.atZone(ZoneId.systemDefault()).toInstant());
-        Date end = Date.from(endDateTime.atZone(ZoneId.systemDefault()).toInstant());
-        List<Reservation> reservationList = reservationRepository.findByStartTimeBetweenAndField(start, end, field).get();
-        List<Date> reservationDateList = reservationList.stream().map(Reservation::getStartTime).collect(Collectors.toList());
+
+        List<Reservation> reservationList = reservationRepository.findByStartTimeBetweenAndField(startDateTime, endDateTime, field).get();
         //dateList.stream().map(Date::getTime).filter()
-        List<Date> dateList = new ArrayList<>();
+        List<LocalDateTime> dateList = new ArrayList<>();
+        List<LocalDateTime> reservationDateList = reservationList.stream().map(Reservation::getStartTime).collect(Collectors.toList());
         // 10 ~ 20 사용가능
         for (int i = 10; i < 21; i++) {
-            Date date = Date.from(LocalDateTime.of(localDate, LocalTime.of(i, 0)).atZone(ZoneId.systemDefault()).toInstant());
-            if(!reservationDateList.contains(date)) {
-                dateList.add(date);
+            LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalTime.of(i, 0));
+            if(!reservationDateList.contains(localDateTime)) {
+                dateList.add(localDateTime);
             }
         }
         System.out.println(dateList);

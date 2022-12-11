@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -33,13 +34,13 @@ public class BoardDto {
 
     @Getter
     public static class BoardSetReqDto{
-        @NotBlank(message = "예약 인덱스는 필수 입력값입니다.")
+        @NotNull(message = "예약 인덱스는 필수 입력값입니다.")
         private Long reservationIdx;
         @NotBlank(message = "제목은 필수 입력값입니다.")
         private String title;
         @NotBlank(message = "내용은 필수 입력값입니다.")
         private String content;
-        @NotBlank(message = "제한은 필수 입력값입니다.")
+        @NotNull(message = "제한은 필수 입력값입니다.")
         private int limit;
     }
 }

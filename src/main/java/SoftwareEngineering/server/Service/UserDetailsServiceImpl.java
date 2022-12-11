@@ -1,18 +1,13 @@
 package SoftwareEngineering.server.Service;
 
 import SoftwareEngineering.server.Common.ErrorCode;
-import SoftwareEngineering.server.Common.Exception.ExistsException;
-import SoftwareEngineering.server.Common.Exception.InvalidRequestException;
-import SoftwareEngineering.server.Common.Exception.NotExistsException;
-import SoftwareEngineering.server.Repository.UserRepository;
+import SoftwareEngineering.server.Common.CustomException.NotExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

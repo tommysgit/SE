@@ -26,7 +26,7 @@ public class Board extends BaseEntity{
     private char isDelete;
 
     @NotBlank
-    @Column
+    @Column(name = "people_limit")
     private int limit;
 
     @ManyToOne

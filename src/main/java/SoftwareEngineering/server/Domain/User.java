@@ -1,7 +1,7 @@
 package SoftwareEngineering.server.Domain;
 
 import SoftwareEngineering.server.Common.ErrorCode;
-import SoftwareEngineering.server.Common.Exception.InvalidRequestException;
+import SoftwareEngineering.server.Common.CustomException.InvalidRequestException;
 import SoftwareEngineering.server.Domain.enums.Role;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;

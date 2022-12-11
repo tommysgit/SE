@@ -1,19 +1,14 @@
 package SoftwareEngineering.server.Controller;
 
-import SoftwareEngineering.server.Common.ApiCallResponse;
 import SoftwareEngineering.server.Common.BaseResponse;
 import SoftwareEngineering.server.Common.ErrorCode;
-import SoftwareEngineering.server.Common.Exception.ExistsException;
+import SoftwareEngineering.server.Common.CustomException.ExistsException;
 import SoftwareEngineering.server.Config.Jwt.JwtTokenProvider;
 import SoftwareEngineering.server.Domain.User;
 import SoftwareEngineering.server.Dto.UserDto;
 import SoftwareEngineering.server.Repository.UserRepository;
 import SoftwareEngineering.server.Service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

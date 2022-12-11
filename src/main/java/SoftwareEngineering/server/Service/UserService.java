@@ -1,9 +1,8 @@
 package SoftwareEngineering.server.Service;
 
 import SoftwareEngineering.server.Common.ErrorCode;
-import SoftwareEngineering.server.Common.Exception.ExistsException;
-import SoftwareEngineering.server.Common.Exception.NotExistsException;
-import SoftwareEngineering.server.Domain.Field;
+import SoftwareEngineering.server.Common.CustomException.ExistsException;
+import SoftwareEngineering.server.Common.CustomException.NotExistsException;
 import SoftwareEngineering.server.Domain.Major;
 import SoftwareEngineering.server.Domain.Reservation;
 import SoftwareEngineering.server.Domain.User;
@@ -18,8 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +53,7 @@ public class UserService {
         String hashPassword = passwordEncoder.encode(userSetReqDto.getPassword());
         Major userMajor = majorRepository.findById(userSetReqDto.getMajorIdx()).get();
         User user = User.builder().name(userSetReqDto.getName()).email(userSetReqDto.getEmail()).studentId(userSetReqDto.getStudentId())
-                .major(userMajor).password(hashPassword).role(Role.ROLE_MEMBER).isDelete('N').build();
+                .major(userMajor).password(hashPassword).phoneNum(userSetReqDto.getPhoneNum()).role(Role.ROLE_MEMBER).isDelete('N').build();
         User savedUser = userRepository.save(user);
         return savedUser;
     }
@@ -71,8 +71,8 @@ public class UserService {
     // 회원 예약내역 조회
     public List<UserDto.UserReservationListResDto> findUserReservation(org.springframework.security.core.userdetails.User user){
         User findUser = userRepository.findByEmailAndIsDelete(user.getUsername(), 'N').get();
-        Date date = new Date();
-        List<Reservation> reservationList = reservationRepository.findByUserAndStartTimeAfterOrderByStartTime(findUser, date).get();
+        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
+        List<Reservation> reservationList = reservationRepository.findByUserAndStartTimeAfterOrderByStartTime(findUser, LocalDateTime.now()).get();
 
         List<UserDto.UserReservationListResDto> userReservationListResDtoList = new ArrayList<>();
         for (Reservation reservation: reservationList) {

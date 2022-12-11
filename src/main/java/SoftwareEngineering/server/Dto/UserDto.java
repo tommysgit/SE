@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -24,9 +25,9 @@ public class UserDto {
         private String email;
         @NotBlank(message = "비밀번호는 필수 입력값입니다.")
         private String password;
-        @NotBlank(message = "학번은 필수 입력값입니다.")
+        @NotNull(message = "학번은 필수 입력값입니다.")
         private int studentId;
-        @NotBlank(message = "학과 인덱스는 필수 입력값입니다.")
+        @NotNull(message = "학과 인덱스는 필수 입력값입니다.")
         private Long majorIdx;
         @NotBlank(message = "핸드폰 번호는 필수 입력값입니다.")
         private String phoneNum;
